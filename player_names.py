@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QHBoxLayout
 
 # My imports
-from styles import MEDIUM_FONT_SIZE, X_AND_O_SIZE
+from styles import MEDIUM_FONT_SIZE, X_AND_O_SIZE, BIG_FONT_SIZE
 
 
 class playerSimbol(QHBoxLayout):
@@ -14,10 +14,20 @@ class playerSimbol(QHBoxLayout):
         self.xSimbol = QLabel("X")
         self.oSimbol = QLabel("O")
 
+        self.scorePlayerOne = 0
+        self.scorePlayerTwo = 0
+
+        self.scoreBoard = QLabel(f"{self.scorePlayerOne} : {self.scorePlayerTwo}")
+
         self.configSimbols()
         self._insertOnSimbolsOnWindow
 
     def configSimbols(self):
+        self.scoreBoard.setStyleSheet(f"font-size:{BIG_FONT_SIZE}px; font-weight:bold;")
+        # Setting up the padding
+        self.scoreBoard.setContentsMargins(0, 0, 0, 0)  # (left, top, right, bottom)
+        self.scoreBoard.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
         self.xSimbol.setStyleSheet(
             f"font-size:{X_AND_O_SIZE}px; font-weight:bold;color:red"
         )
@@ -32,6 +42,7 @@ class playerSimbol(QHBoxLayout):
 
     def _insertOnSimbolsOnWindow(self):
         self.addWidget(self.xSimbol)
+        self.addWidget(self.scoreBoard)
         self.addWidget(self.oSimbol)
 
 

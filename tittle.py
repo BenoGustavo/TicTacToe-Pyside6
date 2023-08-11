@@ -17,5 +17,4 @@ class tittleLabel(QLabel):
 
         # Setting up the padding
         self.setContentsMargins(130, 15, 130, 10)  # (left, top, right, bottom)
-
         self.setAlignment(Qt.AlignmentFlag.AlignHCenter)

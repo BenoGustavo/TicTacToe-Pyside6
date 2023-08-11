@@ -5,6 +5,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 # My Imports
+from styles import setupTheme
 from player_names import playerLabels, playerSimbol
 from main_window import MainWindow
 from tittle import tittleLabel
@@ -12,6 +13,7 @@ from tittle import tittleLabel
 if __name__ == "__main__":
     # Creating the app
     app = QApplication(sys.argv)
+    setupTheme()
     window = MainWindow()
 
     # Adding the tittle to the Layout
