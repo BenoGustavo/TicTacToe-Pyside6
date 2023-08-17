@@ -9,6 +9,7 @@ from styles import setupTheme
 from player_names import playerLabels, playerSimbol
 from main_window import MainWindow
 from tittle import tittleLabel
+from board import ButtonGridBoard, BoardFrame
 
 if __name__ == "__main__":
     # Creating the app
@@ -29,6 +30,15 @@ if __name__ == "__main__":
     window.vLayout.addLayout(playerLabel)
 
     playerLabel._insertLabelOnScreen()
+
+    BoardInstance = BoardFrame()
+
+    board = ButtonGridBoard(board=BoardInstance)
+    # window.vLayout.addLayout(board)
+
+    window.vLayout.addWidget(BoardInstance)
+
+    board._createBoard()
 
     # Remove the permission to resize the window
     window.AdjustFixedSize()
