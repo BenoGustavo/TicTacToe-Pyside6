@@ -3,6 +3,7 @@ import sys
 
 # PySide Imports
 from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt
 
 # My Imports
 from styles import setupTheme
@@ -36,7 +37,7 @@ if __name__ == "__main__":
     board = ButtonGridBoard(board=BoardInstance)
     # window.vLayout.addLayout(board)
 
-    window.vLayout.addWidget(BoardInstance)
+    window.vLayout.addWidget(BoardInstance, alignment=Qt.AlignmentFlag.AlignCenter)
 
     board._createBoard()
 

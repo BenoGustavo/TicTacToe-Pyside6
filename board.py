@@ -11,7 +11,7 @@ class BoardFrame(QFrame):
 
     def configFrame(self):
         self.setContentsMargins(0, 0, 0, 0)
-        self.setFixedSize(350, 350)
+        self.setFixedSize(400, 350)
 
         # Placeholder CSS
         self.setStyleSheet("background-color: lightgray; border: 1px solid black;")
