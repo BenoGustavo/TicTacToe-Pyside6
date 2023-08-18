@@ -11,6 +11,7 @@ from player_names import playerLabels, playerSimbol
 from main_window import MainWindow
 from tittle import tittleLabel
 from board import ButtonGridBoard, BoardFrame
+from game_logic import gameLogic
 
 if __name__ == "__main__":
     # Creating the app
@@ -34,7 +35,7 @@ if __name__ == "__main__":
 
     BoardInstance = BoardFrame()
 
-    board = ButtonGridBoard(board=BoardInstance)
+    board = ButtonGridBoard(board=BoardInstance, gameLogicClass=gameLogic)
     # window.vLayout.addLayout(board)
 
     window.vLayout.addWidget(BoardInstance, alignment=Qt.AlignmentFlag.AlignCenter)
