@@ -1,6 +1,9 @@
+# PySide6 Imports
 from PySide6.QtWidgets import QPushButton, QGridLayout, QFrame
 from PySide6.QtCore import Qt, Slot
-from styles import MEDIUM_FONT_SIZE, TEXT_MARGIN
+
+# My Imports
+from styles import MEDIUM_FONT_SIZE
 
 
 class BoardFrame(QFrame):
@@ -11,10 +14,10 @@ class BoardFrame(QFrame):
 
     def configFrame(self):
         self.setContentsMargins(0, 0, 0, 0)
-        self.setFixedSize(400, 350)
+        self.setFixedSize(400, 400)
 
         # Placeholder CSS
-        self.setStyleSheet("background-color: lightgray; border: 1px solid black;")
+        self.setStyleSheet("border: 2px solid white;")
 
 
 class Button(QPushButton):
@@ -27,7 +30,6 @@ class Button(QPushButton):
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
     def configButtonStyle(self):
-        self.setStyleSheet("background:grey;")
         self.setFixedSize(100, 100)  # w,h
         font = self.font()
         font.setPixelSize(MEDIUM_FONT_SIZE)
@@ -35,8 +37,10 @@ class Button(QPushButton):
 
 
 class ButtonGridBoard(QGridLayout):
-    def __init__(self, board: QFrame, *args, **kwargs):
+    def __init__(self, board: QFrame, gameLogicClass, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.gameLogicInstance = gameLogicClass()
 
         self._gameBoardLayout = [
             [" ", " ", " "],
@@ -54,9 +58,15 @@ class ButtonGridBoard(QGridLayout):
             for column, buttonText in enumerate(text):
                 button = Button(buttonText)
 
+                button.setProperty("cssClass", "ButtonCSS")
                 self.addWidget(button, row, column)
 
-                buttonSlot = self._makeButtonSlot(self._registerPlayerMove)
+                buttonSlot = self._makeButtonSlot(
+                    method=self.gameLogicInstance._registerPlayerMove,
+                    row=row,
+                    column=column,
+                )
+
                 button.clicked.connect(buttonSlot)
 
     def _makeButtonSlot(self, method, *args, **kwargs):
@@ -65,6 +75,3 @@ class ButtonGridBoard(QGridLayout):
             method(*args, **kwargs)
 
         return realSlot
-
-    def _registerPlayerMove(self):
-        raise NotImplementedError
