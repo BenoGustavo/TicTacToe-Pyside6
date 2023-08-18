@@ -1,11 +1,20 @@
 from PySide6.QtWidgets import QPushButton, QGridLayout, QFrame
 from PySide6.QtCore import Qt, Slot
-from styles import MEDIUM_FONT_SIZE
+from styles import MEDIUM_FONT_SIZE, TEXT_MARGIN
 
 
 class BoardFrame(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.configFrame()
+
+    def configFrame(self):
+        self.setContentsMargins(0, 0, 0, 0)
+        self.setFixedSize(350, 350)
+
+        # Placeholder CSS
+        self.setStyleSheet("background-color: lightgray; border: 1px solid black;")
 
 
 class Button(QPushButton):
@@ -18,7 +27,8 @@ class Button(QPushButton):
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
     def configButtonStyle(self):
-        self.setStyleSheet("background:grey;height:100;width:10;")
+        self.setStyleSheet("background:grey;")
+        self.setFixedSize(100, 100)  # w,h
         font = self.font()
         font.setPixelSize(MEDIUM_FONT_SIZE)
         self.setFont(font)
@@ -35,9 +45,6 @@ class ButtonGridBoard(QGridLayout):
         ]
 
         self.frame = board
-        self.frame.setStyleSheet(
-            "background-color: lightgray; border: 1px solid black;"
-        )
         self.frame.setLayout(self)
 
         self._createBoard

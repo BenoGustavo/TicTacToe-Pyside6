@@ -63,7 +63,7 @@ class playerLabels(QHBoxLayout):
         )
 
         # Setting up the padding
-        self.playerOne.setContentsMargins(45, 0, 0, 0)  # (left, top, right, bottom)
+        self.playerOne.setContentsMargins(45, 0, 0, 15)  # (left, top, right, bottom)
         self.playerOne.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         self.playerTwo.setStyleSheet(
