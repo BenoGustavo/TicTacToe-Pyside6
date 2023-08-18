@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QPushButton, QGridLayout, QFrame
 from PySide6.QtCore import Qt, Slot
 
 # My Imports
-from styles import MEDIUM_FONT_SIZE
+from styles import BIG_FONT_SIZE
 
 
 class BoardFrame(QFrame):
@@ -32,7 +32,8 @@ class Button(QPushButton):
     def configButtonStyle(self):
         self.setFixedSize(100, 100)  # w,h
         font = self.font()
-        font.setPixelSize(MEDIUM_FONT_SIZE)
+        font.setPixelSize(BIG_FONT_SIZE)
+        font.setBold(True)
         self.setFont(font)
 
 
@@ -62,7 +63,8 @@ class ButtonGridBoard(QGridLayout):
                 self.addWidget(button, row, column)
 
                 buttonSlot = self._makeButtonSlot(
-                    method=self.gameLogicInstance._registerPlayerMove,
+                    self.gameLogicInstance._registerPlayerMove,
+                    button,
                     row=row,
                     column=column,
                 )
