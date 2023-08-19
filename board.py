@@ -41,13 +41,13 @@ class ButtonGridBoard(QGridLayout):
     def __init__(self, board: QFrame, gameLogicClass, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.gameLogicInstance = gameLogicClass()
-
         self._gameBoardLayout = [
             [" ", " ", " "],
             [" ", " ", " "],
             [" ", " ", " "],
         ]
+
+        self.gameLogicInstance = gameLogicClass(self._gameBoardLayout)
 
         self.frame = board
         self.frame.setLayout(self)
