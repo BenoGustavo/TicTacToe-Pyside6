@@ -7,17 +7,39 @@ from PySide6.QtWidgets import QHBoxLayout
 from styles import MEDIUM_FONT_SIZE, X_AND_O_SIZE, BIG_FONT_SIZE
 
 
-class playerSimbol(QHBoxLayout):
-    def __init__(self, *args, **kwargs):
+class scoreBoard(QLabel):
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
         super().__init__(*args, **kwargs)
-
-        self.xSimbol = QLabel("X")
-        self.oSimbol = QLabel("O")
-
         self.scorePlayerOne = 0
         self.scorePlayerTwo = 0
 
-        self.scoreBoard = QLabel(f"{self.scorePlayerOne} : {self.scorePlayerTwo}")
+        self.setText(f"{self.scorePlayerOne} : {self.scorePlayerTwo}")
+
+    def increasePlayerScoreByOne(self, player: str):
+        if player == "X":
+            self.scorePlayerOne += 1
+        elif player == "O":
+            self.scorePlayerTwo += 1
+
+        self.updateScore()
+
+    def updateScore(self):
+        self.setText(f"{self.scorePlayerOne} : {self.scorePlayerTwo}")
+        self.update()
+
+
+class playerSimbol(QHBoxLayout):
+    def __init__(self, score, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.scoreBoard = score
+
+        self.xSimbol = QLabel("X")
+        self.oSimbol = QLabel("O")
 
         self.configSimbols()
         self._insertOnSimbolsOnWindow

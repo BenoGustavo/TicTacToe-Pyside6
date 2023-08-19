@@ -12,6 +12,7 @@ from main_window import MainWindow
 from tittle import tittleLabel
 from board import ButtonGridBoard, BoardFrame
 from game_logic import gameLogic
+from player_names import scoreBoard
 
 if __name__ == "__main__":
     # Creating the app
@@ -23,7 +24,9 @@ if __name__ == "__main__":
     tittleWidget = tittleLabel("Tic-Tac-Toe")
     window.addWidgetToVLayout(tittleWidget)
 
-    playerSimbols = playerSimbol()
+    score = scoreBoard()
+
+    playerSimbols = playerSimbol(score)
     window.vLayout.addLayout(playerSimbols)
 
     playerSimbols._insertOnSimbolsOnWindow()
@@ -35,7 +38,7 @@ if __name__ == "__main__":
 
     BoardInstance = BoardFrame()
 
-    board = ButtonGridBoard(board=BoardInstance, gameLogicClass=gameLogic)
+    board = ButtonGridBoard(board=BoardInstance, gameLogicClass=gameLogic, score=score)
     # window.vLayout.addLayout(board)
 
     window.vLayout.addWidget(BoardInstance, alignment=Qt.AlignmentFlag.AlignCenter)

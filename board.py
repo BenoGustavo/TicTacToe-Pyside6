@@ -38,7 +38,7 @@ class Button(QPushButton):
 
 
 class ButtonGridBoard(QGridLayout):
-    def __init__(self, board: QFrame, gameLogicClass, *args, **kwargs):
+    def __init__(self, board: QFrame, gameLogicClass, score, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._gameBoardLayout = [
@@ -47,7 +47,11 @@ class ButtonGridBoard(QGridLayout):
             [" ", " ", " "],
         ]
 
-        self.gameLogicInstance = gameLogicClass(self._gameBoardLayout)
+        self.buttons = []  # Store button instances in a 2D list
+
+        self.scoreBoard = score
+
+        self.gameLogicInstance = gameLogicClass(self.scoreBoard, self._gameBoardLayout)
 
         self.frame = board
         self.frame.setLayout(self)
@@ -56,6 +60,7 @@ class ButtonGridBoard(QGridLayout):
 
     def _createBoard(self):
         for row, text in enumerate(self._gameBoardLayout):
+            row_buttons = []
             for column, buttonText in enumerate(text):
                 button = Button(buttonText)
 
@@ -65,11 +70,16 @@ class ButtonGridBoard(QGridLayout):
                 buttonSlot = self._makeButtonSlot(
                     self.gameLogicInstance._registerPlayerMove,
                     button,
+                    self.clearButtons,
+                    self.checkTie,
                     row=row,
                     column=column,
                 )
 
                 button.clicked.connect(buttonSlot)
+
+                row_buttons.append(button)
+            self.buttons.append(row_buttons)
 
     def _makeButtonSlot(self, method, *args, **kwargs):
         @Slot(bool)
@@ -77,3 +87,21 @@ class ButtonGridBoard(QGridLayout):
             method(*args, **kwargs)
 
         return realSlot
+
+    def clearButtons(self):
+        for row_buttons in self.buttons:
+            for button in row_buttons:
+                button.setText(" ")
+
+    # IT NEEDED TO BE PART OF THE GAMES LOGIC BUT I WILL LEAVE IT HERE
+    # BECAUSE IT WILL DO LESS WORK
+    def checkTie(self):
+        tieFlag = 0
+        for row_buttons in self.buttons:
+            for button in row_buttons:
+                if button.text() == "X" or button.text() == "O":
+                    tieFlag += 1
+
+        if tieFlag == 9:
+            print("reset")
+            self.clearButtons()

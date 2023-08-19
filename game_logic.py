@@ -9,11 +9,14 @@ from PySide6.QtWidgets import QPushButton
 
 
 class gameLogic:
-    def __init__(self, gameBoard) -> None:
+    def __init__(self, score, gameBoard) -> None:
+        self.scoreBoard = score
         self.board = gameBoard
         self.whichPlayer = randint(1, 2)  # Pair for X and odd for O
 
-    def _registerPlayerMove(self, button: QPushButton, row: int, column: int):
+    def _registerPlayerMove(
+        self, button: QPushButton, ButtonClearMethod, checkTie, row: int, column: int
+    ):
         if isXorO_Time(self.whichPlayer) == "x":
             if isButtonEmpty(button.text()):
                 button.setText("X")
@@ -22,9 +25,10 @@ class gameLogic:
 
                 self.whichPlayer = self.whichPlayer - 1
 
-                self.CheckVerticalWin()
-                self.CheckHorizontalWin()
-                self.checkDiagonalWin()
+                self.CheckVerticalWin(ButtonClearMethod)
+                self.CheckHorizontalWin(ButtonClearMethod)
+                self.checkDiagonalWin(ButtonClearMethod)
+                checkTie()
 
         elif isXorO_Time(self.whichPlayer) == "o":
             if isButtonEmpty(button.text()):
@@ -34,22 +38,26 @@ class gameLogic:
 
                 self.whichPlayer = self.whichPlayer + 1
 
-                self.CheckVerticalWin()
-                self.CheckHorizontalWin()
-                self.checkDiagonalWin()
+                self.CheckVerticalWin(ButtonClearMethod)
+                self.CheckHorizontalWin(ButtonClearMethod)
+                self.checkDiagonalWin(ButtonClearMethod)
+                checkTie()
 
             ##DEBUG
             print(self.whichPlayer, self.board)
             print(f"Button pressed: Row {row}, Column {column}")
 
-    def CheckVerticalWin(self):
-        for column in range(0, 2):
+    def CheckVerticalWin(self, ButtonClearMethod):
+        for column in range(0, 3):
             if (
                 self.board[0][column] == "X"
                 and self.board[1][column] == "X"
                 and self.board[2][column] == "X"
             ):
                 print("X Ganhou")
+                self.scoreBoard.increasePlayerScoreByOne("X")
+                ButtonClearMethod()
+                self.resetBoardMatrix()
 
             elif (
                 self.board[0][column] == "O"
@@ -57,15 +65,21 @@ class gameLogic:
                 and self.board[2][column] == "O"
             ):
                 print("O Ganhou")
+                self.scoreBoard.increasePlayerScoreByOne("O")
+                ButtonClearMethod()
+                self.resetBoardMatrix()
 
-    def CheckHorizontalWin(self):
-        for row in range(0, 2):
+    def CheckHorizontalWin(self, ButtonClearMethod):
+        for row in range(0, 3):
             if (
                 self.board[row][0] == "X"
                 and self.board[row][1] == "X"
                 and self.board[row][2] == "X"
             ):
                 print("X Ganhou")
+                self.scoreBoard.increasePlayerScoreByOne("X")
+                ButtonClearMethod()
+                self.resetBoardMatrix()
 
             elif (
                 self.board[row][0] == "O"
@@ -73,8 +87,11 @@ class gameLogic:
                 and self.board[row][2] == "O"
             ):
                 print("O Ganhou")
+                self.scoreBoard.increasePlayerScoreByOne("O")
+                ButtonClearMethod()
+                self.resetBoardMatrix()
 
-    def checkDiagonalWin(self):
+    def checkDiagonalWin(self, ButtonClearMethod):
         # FOR X
         """Checking the vertical line with a X vertical line
         [X][-][-]
@@ -88,6 +105,9 @@ class gameLogic:
             and self.board[2][0] == "X"
         ):
             print("X Ganhou")
+            self.scoreBoard.increasePlayerScoreByOne("X")
+            ButtonClearMethod()
+            self.resetBoardMatrix()
 
         """Checking the vertical line with a X vertical line
             [-][-][x]
@@ -100,6 +120,9 @@ class gameLogic:
             and self.board[0][0] == "X"
         ):
             print("X Ganhou")
+            self.scoreBoard.increasePlayerScoreByOne("X")
+            ButtonClearMethod()
+            self.resetBoardMatrix()
 
         ## FOR O
 
@@ -109,6 +132,9 @@ class gameLogic:
             and self.board[2][0] == "O"
         ):
             print("O Ganhou")
+            self.scoreBoard.increasePlayerScoreByOne("O")
+            ButtonClearMethod()
+            self.resetBoardMatrix()
 
         """Checking the vertical line with a X vertical line
             [-][-][x]
@@ -121,3 +147,13 @@ class gameLogic:
             and self.board[0][0] == "O"
         ):
             print("O Ganhou")
+            self.scoreBoard.increasePlayerScoreByOne("O")
+            ButtonClearMethod()
+            self.resetBoardMatrix()
+
+    def resetBoardMatrix(self):
+        self.board = [
+            [" ", " ", " "],
+            [" ", " ", " "],
+            [" ", " ", " "],
+        ]
