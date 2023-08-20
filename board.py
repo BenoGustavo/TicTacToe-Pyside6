@@ -70,8 +70,7 @@ class ButtonGridBoard(QGridLayout):
                 buttonSlot = self._makeButtonSlot(
                     self.gameLogicInstance._registerPlayerMove,
                     button,
-                    self.clearButtons,
-                    self.checkTie,
+                    self.buttons,
                     row=row,
                     column=column,
                 )
@@ -87,21 +86,3 @@ class ButtonGridBoard(QGridLayout):
             method(*args, **kwargs)
 
         return realSlot
-
-    def clearButtons(self):
-        for row_buttons in self.buttons:
-            for button in row_buttons:
-                button.setText(" ")
-
-    # IT NEEDED TO BE PART OF THE GAMES LOGIC BUT I WILL LEAVE IT HERE
-    # BECAUSE IT WILL DO LESS WORK
-    def checkTie(self):
-        tieFlag = 0
-        for row_buttons in self.buttons:
-            for button in row_buttons:
-                if button.text() == "X" or button.text() == "O":
-                    tieFlag += 1
-
-        if tieFlag == 9:
-            print("reset")
-            self.clearButtons()
