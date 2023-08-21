@@ -1,9 +1,16 @@
 import qdarktheme
+from pathlib import Path
+
+# Icon
+ROOT_DIR = Path(__file__).parent
+FILES_DIR = ROOT_DIR / "assets"
+WINDOW_ICON_PATH = FILES_DIR / "tictactoe icon.png"
 
 # Colors
 PRIMARY_COLOR = "#d1d1d1"
 DARKER_PRIMARY_COLOR = "#949494"
 DARKEST_PRIMARY_COLOR = "#616161"
+WINNER_HIGHLIGHT_COLOR = "#535353"
 
 # FONTS
 FONT_FAMILY = "Baloo,Arial"
