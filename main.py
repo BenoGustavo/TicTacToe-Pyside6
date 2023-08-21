@@ -4,9 +4,10 @@ import sys
 # PySide Imports
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon
 
 # My Imports
-from styles import setupTheme
+from styles import setupTheme, WINDOW_ICON_PATH
 from player_names import playerLabels, playerSimbol
 from main_window import MainWindow
 from tittle import tittleLabel
@@ -19,6 +20,11 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     setupTheme()
     window = MainWindow()
+
+    # adding an icon to the app
+    icon = QIcon(str(WINDOW_ICON_PATH))
+    window.setWindowIcon(icon)
+    app.setWindowIcon(icon)
 
     # Adding the tittle to the Layout
     tittleWidget = tittleLabel("Tic-Tac-Toe")
