@@ -1,5 +1,6 @@
 # MyImports
 from utils import isXorO_Time, isButtonEmpty
+from styles import WINNER_HIGHLIGHT_COLOR
 
 # Other imports
 from random import randint
@@ -61,7 +62,7 @@ class gameLogic:
                 and self.board[1][column] == "X"
                 and self.board[2][column] == "X"
             ):
-                print("X Ganhou")
+                print("X Ganhou by Vertical column")
                 self.showWinnerCombination([0, 1, 2], column)
                 self.scoreBoard.increasePlayerScoreByOne("X")
                 self.clearButtons()
@@ -72,7 +73,7 @@ class gameLogic:
                 and self.board[1][column] == "O"
                 and self.board[2][column] == "O"
             ):
-                print("O Ganhou")
+                print("O Ganhou by Vertical column")
                 self.showWinnerCombination([0, 1, 2], column)
                 self.scoreBoard.increasePlayerScoreByOne("O")
                 self.clearButtons()
@@ -85,7 +86,7 @@ class gameLogic:
                 and self.board[row][1] == "X"
                 and self.board[row][2] == "X"
             ):
-                print("X Ganhou")
+                print("X Ganhou by Horizontal row")
                 self.showWinnerCombination(row, [0, 1, 2])
                 self.scoreBoard.increasePlayerScoreByOne("X")
                 self.clearButtons()
@@ -96,7 +97,7 @@ class gameLogic:
                 and self.board[row][1] == "O"
                 and self.board[row][2] == "O"
             ):
-                print("O Ganhou")
+                print("O Ganhou by Horizontal row")
                 self.showWinnerCombination(row, [0, 1, 2])
                 self.scoreBoard.increasePlayerScoreByOne("O")
                 self.clearButtons()
@@ -115,7 +116,7 @@ class gameLogic:
             and self.board[1][1] == "X"
             and self.board[2][0] == "X"
         ):
-            print("X Ganhou")
+            print("X won by Diagonal -> (left to right)")
             self.showWinnerCombination([0, 1, 2], [2, 1, 0])
             self.scoreBoard.increasePlayerScoreByOne("X")
             self.clearButtons()
@@ -131,7 +132,7 @@ class gameLogic:
             and self.board[1][1] == "X"
             and self.board[0][0] == "X"
         ):
-            print("X Ganhou")
+            print("X  won by Diagonal -> (right to left)")
             self.showWinnerCombination([2, 1, 0], [2, 1, 0])
             self.scoreBoard.increasePlayerScoreByOne("X")
             self.clearButtons()
@@ -144,7 +145,7 @@ class gameLogic:
             and self.board[1][1] == "O"
             and self.board[2][0] == "O"
         ):
-            print("O Ganhou")
+            print("O  won by Diagonal -> (left to right)")
             self.showWinnerCombination([0, 1, 2], [2, 1, 0])
             self.scoreBoard.increasePlayerScoreByOne("O")
             self.clearButtons()
@@ -160,7 +161,7 @@ class gameLogic:
             and self.board[1][1] == "O"
             and self.board[0][0] == "O"
         ):
-            print("O Ganhou")
+            print("O won by Diagonal -> (right to left)")
             self.showWinnerCombination([2, 1, 0], [2, 1, 0])
             self.scoreBoard.increasePlayerScoreByOne("O")
             self.clearButtons()
@@ -186,7 +187,7 @@ class gameLogic:
                     tieFlag += 1
 
         if tieFlag == 9:
-            print("reset")
+            print("\nTie Function\n")
             self.resetBoardMatrix()
             self.clearButtons()
 
@@ -199,19 +200,37 @@ class gameLogic:
         # Checking signals
 
         if isinstance(row, list) and isinstance(column, list):  # Diagonal win
-            self.buttons[row[0]][column[0]].setStyleSheet("color: yellow;")
-            self.buttons[row[1]][column[1]].setStyleSheet("color: yellow;")
-            self.buttons[row[2]][column[2]].setStyleSheet("color: yellow;")
+            self.buttons[row[0]][column[0]].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
+            self.buttons[row[1]][column[1]].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
+            self.buttons[row[2]][column[2]].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
 
         elif isinstance(row, int):  # Horizontal win
-            self.buttons[row][column[0]].setStyleSheet("color: yellow;")
-            self.buttons[row][column[1]].setStyleSheet("color: yellow;")
-            self.buttons[row][column[2]].setStyleSheet("color: yellow;")
+            self.buttons[row][column[0]].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
+            self.buttons[row][column[1]].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
+            self.buttons[row][column[2]].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
 
         elif isinstance(column, int):  # Vertical win
-            self.buttons[row[0]][column].setStyleSheet("color: yellow;")
-            self.buttons[row[1]][column].setStyleSheet("color: yellow;")
-            self.buttons[row[2]][column].setStyleSheet("color: yellow;")
+            self.buttons[row[0]][column].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
+            self.buttons[row[1]][column].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
+            self.buttons[row[2]][column].setStyleSheet(
+                f"color: {WINNER_HIGHLIGHT_COLOR};"
+            )
 
         loop = QEventLoop()
 
